@@ -1,7 +1,7 @@
 package wlcrc
 
 type Wlcrc struct {
-  crc uint16
+	crc uint16
 }
 
 const Size = 2
@@ -42,32 +42,32 @@ var crcTable = []uint16{
 }
 
 func (c *Wlcrc) Write(p []byte) (int, error) {
-  for _, v := range p {
-    c.crc = crcTable[(c.crc >> 8) ^ uint16(v)] ^ (c.crc << 8)
-  }
+	for _, v := range p {
+		c.crc = crcTable[(c.crc>>8)^uint16(v)] ^ (c.crc << 8)
+	}
 
-  return len(p), nil
+	return len(p), nil
 }
 
 func (c *Wlcrc) Sum16() uint16 {
-  return c.crc
+	return c.crc
 }
 
 func (c *Wlcrc) Sum(in []byte) []byte {
-  s := c.Sum16()
-  return append(in, byte(s>>8), byte(s))
+	s := c.Sum16()
+	return append(in, byte(s>>8), byte(s))
 }
 
 func (c *Wlcrc) Reset() {
-  c.crc = 0
+	c.crc = 0
 }
 
 func (c *Wlcrc) Size() int {
-  return Size
+	return Size
 }
 
 func (c *Wlcrc) BlockSize() int {
-  return 1
+	return 1
 }
 
 func New() Wlcrc {
