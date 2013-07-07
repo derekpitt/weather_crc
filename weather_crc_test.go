@@ -1,4 +1,4 @@
-package wlcrc
+package weather_crc
 
 import "testing"
 

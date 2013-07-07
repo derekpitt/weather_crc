@@ -1,6 +1,6 @@
-package wlcrc
+package weather_crc
 
-type Wlcrc struct {
+type weatherCrc struct {
 	crc uint16
 }
 
@@ -41,7 +41,7 @@ var crcTable = []uint16{
 	0x6e17, 0x7e36, 0x4e55, 0x5e74, 0x2e93, 0x3eb2, 0xed1, 0x1ef0,
 }
 
-func (c *Wlcrc) Write(p []byte) (int, error) {
+func (c *weatherCrc) Write(p []byte) (int, error) {
 	for _, v := range p {
 		c.crc = crcTable[(c.crc>>8)^uint16(v)] ^ (c.crc << 8)
 	}
@@ -49,27 +49,27 @@ func (c *Wlcrc) Write(p []byte) (int, error) {
 	return len(p), nil
 }
 
-func (c *Wlcrc) Sum16() uint16 {
+func (c *weatherCrc) Sum16() uint16 {
 	return c.crc
 }
 
-func (c *Wlcrc) Sum(in []byte) []byte {
+func (c *weatherCrc) Sum(in []byte) []byte {
 	s := c.Sum16()
 	return append(in, byte(s>>8), byte(s))
 }
 
-func (c *Wlcrc) Reset() {
+func (c *weatherCrc) Reset() {
 	c.crc = 0
 }
 
-func (c *Wlcrc) Size() int {
+func (c *weatherCrc) Size() int {
 	return Size
 }
 
-func (c *Wlcrc) BlockSize() int {
+func (c *weatherCrc) BlockSize() int {
 	return 1
 }
 
-func New() Wlcrc {
-	return Wlcrc{0}
+func New() weatherCrc {
+	return weatherCrc{}
 }
