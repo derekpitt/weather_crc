@@ -14,7 +14,7 @@ From http://www.davisnet.com/support/weather/download/VantageSerialProtocolDocs_
 > accumulating data).
 
 
-Wlcrc implements hash.Hash, but adds a Sum16() function to get the current value.
+Weather_crc implements hash.Hash, but adds a Sum16() function to get the current value.
 
 
 # Example
@@ -23,11 +23,11 @@ Wlcrc implements hash.Hash, but adds a Sum16() function to get the current value
 package main
 
 import (
-  "github.com/derekpitt/wlcrc"
+  "github.com/derekpitt/weather_crc"
 )
 
 func main() {
-  crc := wlcrc.New()
+  crc := weather_crc.New()
   crc.Write([]byte{0xc6})
   print(crc.Sum16())
 }
